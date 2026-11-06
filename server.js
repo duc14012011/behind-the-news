@@ -82,9 +82,7 @@ async function gemini(messages, json = true) {
   const systemText = messages
     .filter(m => m.role === 'system')
     .map(m => m.content)
-    .join('
-
-');
+    .join('\n\n');
 
   const contents = messages
     .filter(m => m.role !== 'system')
