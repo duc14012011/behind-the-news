@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07152e">
+<title>BEHIND THE NEWS | Sự thật đằng sau mỗi tin tức</title>
+<style>
+:root{
+ --bg:#061329;--panel:#0b1e3d;--panel2:#10284d;--line:#1c4d83;
+ --cyan:#36c9ff;--blue:#1688ff;--red:#ff4d67;--gold:#ffd166;
+ --text:#eef6ff;--muted:#a9bfd9;--green:#4ade9a;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 80% 0%,#10366a 0,transparent 34%),var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.6}
+button,input,textarea{font:inherit}
+a{color:inherit;text-decoration:none}
+header{position:sticky;top:0;z-index:20;background:#061329ed;backdrop-filter:blur(14px);border-bottom:1px solid #1b4775}
+.nav{max-width:1180px;margin:auto;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{font-weight:900;letter-spacing:1px;font-size:18px}.brand span{color:var(--red)}
+.navlinks{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.navlinks button{border:1px solid transparent;background:transparent;color:var(--muted);padding:8px 11px;border-radius:9px;cursor:pointer;font-size:13px}
+.navlinks button:hover,.navlinks button.active{background:#12315a;color:white;border-color:#25649b}
+main{max-width:1180px;margin:auto;padding:28px 22px 70px}
+.page{display:none;animation:fade .25s ease}.page.active{display:block}
+@keyframes fade{from{opacity:.3;transform:translateY(5px)}to{opacity:1;transform:none}}
+.hero{min-height:390px;border:1px solid #1d5c96;border-radius:24px;padding:clamp(26px,5vw,60px);position:relative;overflow:hidden;background:linear-gradient(115deg,#0b2850 0%,#07162f 60%,#102e58 100%)}
+.hero:after{content:"";position:absolute;width:340px;height:340px;border:1px solid #36c9ff55;border-radius:50%;right:-60px;top:25px;box-shadow:0 0 0 25px #36c9ff0b,0 0 0 55px #36c9ff08}
+.kicker{color:var(--cyan);font-size:12px;letter-spacing:3px;font-weight:800;text-transform:uppercase}
+h1{font-size:clamp(38px,7vw,76px);line-height:.98;letter-spacing:-2px;margin:18px 0}
+h1 span{color:var(--red)}.lead{max-width:650px;color:#c4d8ef;font-size:18px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;position:relative;z-index:2}
+.btn{border:0;border-radius:10px;padding:12px 18px;font-weight:800;cursor:pointer;background:linear-gradient(100deg,#1688ff,#36c9ff);color:#031326;box-shadow:0 8px 24px #1688ff33}
+.btn.secondary{background:transparent;border:1px solid #3a79ae;color:#dff4ff;box-shadow:none}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+.section-head{margin:34px 0 16px}.section-head h2{font-size:27px;margin:0 0 5px}.section-head p{margin:0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.card{background:linear-gradient(145deg,#0c2243,#091a34);border:1px solid #1a4775;border-radius:16px;padding:20px}
+.card h3{margin:8px 0;font-size:18px}.card p{color:var(--muted);margin:0}
+.icon{width:42px;height:42px;border-radius:12px;background:#123a68;color:var(--cyan);display:grid;place-items:center;font-size:22px}
+.tag{display:inline-block;padding:4px 9px;border:1px solid #28659b;border-radius:99px;color:#8bdfff;font-size:11px;font-weight:800;letter-spacing:1px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+.step{border-top:3px solid var(--cyan);background:#0b2040;padding:17px;border-radius:10px}.step b{color:var(--cyan);font-size:13px}
+.step h3{margin:5px 0;font-size:17px}.step p{margin:0;color:var(--muted);font-size:14px}
+.panel{background:#0a1d39;border:1px solid #1d4b7a;border-radius:18px;padding:clamp(18px,3vw,30px);margin-top:18px}
+.panel h2,.panel h3{margin-top:0}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+label{display:block;color:#c8d9eb;font-size:14px;font-weight:700;margin:0 0 7px}
+input[type=text],input[type=url],textarea{width:100%;background:#06152c;border:1px solid #28547e;border-radius:10px;padding:12px;color:white;outline:none}
+input:focus,textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #36c9ff18}
+textarea{min-height:100px;resize:vertical}
+.checklist{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:17px 0}
+.check{display:flex;gap:10px;align-items:flex-start;background:#0d274a;border:1px solid #1d4774;padding:12px;border-radius:10px;font-size:14px;color:#d9e8f7}
+.check input{accent-color:#36c9ff;margin-top:4px}
+.result{display:none;margin-top:18px;padding:18px;border-radius:12px;border:1px solid #28659b;background:#0c2a4d}
+.result strong{font-size:18px}.result p{margin:6px 0 0;color:#c2d6ea}
+.fact-status{display:none;margin-top:18px;padding:18px;border:1px solid #28659b;border-radius:13px;background:#0b2445}
+.fact-progress{height:8px;background:#18385d;border-radius:20px;overflow:hidden;margin:12px 0}.fact-progress span{display:block;height:100%;width:8%;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .5s ease}
+.fact-stage{display:flex;gap:10px;align-items:center;color:#c4d8ef;font-size:14px;margin:8px 0}.fact-stage.done{color:var(--green)}.fact-stage.active{color:var(--cyan);font-weight:800}
+.verdict{padding:16px;border-radius:12px;margin:12px 0;border:1px solid #32618a;background:#0d294b}.verdict h3{margin:0 0 5px;font-size:21px}.verdict.co_co_so{border-color:#23885f}.verdict.co_dau_hieu_sai{border-color:#b34a5b}.verdict.hon_hop{border-color:#b58b35}.verdict.chua_du_can_cu{border-color:#4777a5}.evidence-list{display:grid;gap:10px;margin-top:12px}.evidence-item{padding:12px;border:1px solid #244d76;border-radius:10px;background:#091a32}.evidence-item a{color:#79d8ff;text-decoration:underline;overflow-wrap:anywhere}.evidence-item p{font-size:13px}.claim-item{padding:12px;border-left:3px solid var(--cyan);background:#0d274a;margin:9px 0;border-radius:0 9px 9px 0}.fact-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.note{border-left:4px solid var(--gold);padding:12px 15px;background:#3b321a44;color:#f7e6b5;border-radius:0 9px 9px 0;margin-top:17px;font-size:14px}
+.timeline{display:grid;gap:12px}.timeline-item{display:grid;grid-template-columns:58px 1fr;gap:14px;align-items:start}
+.num{width:48px;height:48px;border-radius:50%;background:#123e6b;border:1px solid var(--cyan);display:grid;place-items:center;color:var(--cyan);font-weight:900;font-size:20px}
+.timeline-item .card{padding:15px 18px;margin:0}
+.quiz-q{padding:18px;background:#0d274a;border:1px solid #25517e;border-radius:13px;margin:13px 0}
+.quiz-q h3{font-size:16px;margin:0 0 12px}.option{display:block;padding:9px 11px;margin:7px 0;border:1px solid #28547e;border-radius:9px;cursor:pointer;color:#dceafa}.option:hover{background:#12365f}.option input{accent-color:#36c9ff;margin-right:8px}
+.feedback{font-size:13px;color:var(--muted);margin-top:8px;display:none}
+.score{font-size:23px;color:var(--cyan);font-weight:900}
+.footer{border-top:1px solid #1b4775;margin-top:48px;padding:22px 0;color:#8fa9c5;font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.small{font-size:12px;color:#91aaca}
+@media(max-width:850px){.grid{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}.nav{align-items:flex-start;flex-direction:column}.navlinks{justify-content:flex-start}}
+@media(max-width:580px){main{padding:18px 14px 45px}.grid,.steps,.formgrid,.checklist{grid-template-columns:1fr}.hero{min-height:0}.nav{padding:10px 14px}.navlinks button{font-size:12px;padding:7px 8px}h1{letter-spacing:-1px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="nav">
+  <a class="brand" href="#" onclick="showPage('home');return false">BEHIND <span>THE NEWS</span></a>
+  <nav class="navlinks" aria-label="Điều hướng">
+   <button class="active" data-page="home">Trang chủ</button>
+   <button data-page="journey">Hành trình tin</button>
+   <button data-page="check">Kiểm chứng</button>
+   <button data-page="guide">Cẩm nang</button>
+   <button data-page="quiz">Thử thách</button>
+   <button data-page="impact">Hệ quả</button>
+  </nav>
+ </div>
+</header>
+<main>
+<section class="page active" id="home">
+ <div class="hero">
+  <div class="kicker">Digital literacy • Think before you share</div>
+  <h1>BEHIND<br>THE <span>NEWS</span></h1>
+  <div class="tag">SỰ THẬT ĐẰNG SAU MỖI TIN TỨC</div>
+  <p class="lead">Một cú nhấp chuột có thể đưa thông tin đi rất xa. Hãy học cách nhận diện nguồn tin, kiểm chứng nội dung và chia sẻ có trách nhiệm.</p>
+  <div class="hero-actions">
+   <button class="btn" onclick="showPage('check')">Bắt đầu kiểm chứng ↗</button>
+   <button class="btn secondary" onclick="showPage('quiz')">Thử sức với Fake News Detector</button>
+  </div>
+ </div>
+ <div class="section-head"><h2>Khám phá trạm thông tin</h2><p>Đi từ cách tin tức lan truyền đến cách bạn có thể kiểm tra trước khi chia sẻ.</p></div>
+ <div class="grid">
+  <article class="card"><div class="icon">🌐</div><h3>Hành trình lan truyền</h3><p>Tìm hiểu một bài đăng có thể được chia sẻ, khuếch đại và tiếp cận cộng đồng như thế nào.</p></article>
+  <article class="card"><div class="icon">🔎</div><h3>Kiểm chứng nguồn tin</h3><p>Đánh giá tác giả, đơn vị đăng tải, thời gian, bằng chứng và nguồn đối chiếu.</p></article>
+  <article class="card"><div class="icon">🧭</div><h3>Cẩm nang 5 bước</h3><p>Một quy trình ngắn gọn để bình tĩnh xác minh trước khi tin hoặc chia sẻ.</p></article>
+ </div>
+ <div class="section-head"><h2>Quy tắc vàng</h2><p>THINK • CHECK • SHARE RESPONSIBLY</p></div>
+ <div class="steps">
+  <div class="step"><b>01 / THINK</b><h3>Dừng lại</h3><p>Đừng vội tin hoặc chia sẻ vì tiêu đề gây sốc.</p></div>
+  <div class="step"><b>02 / CHECK</b><h3>Kiểm tra</h3><p>Tìm nguồn gốc và bằng chứng của thông tin.</p></div>
+  <div class="step"><b>03 / COMPARE</b><h3>Đối chiếu</h3><p>So sánh với các nguồn độc lập đáng tin cậy.</p></div>
+  <div class="step"><b>04 / SHARE</b><h3>Chia sẻ có trách nhiệm</h3><p>Chỉ lan truyền khi đã có đủ căn cứ.</p></div>
+ </div>
+</section>
+
+<section class="page" id="journey">
+ <div class="section-head"><span class="tag">01 • HIỂU CÁCH TIN TỨC LAN TRUYỀN</span><h2>Hành trình lan truyền thông tin trên mạng</h2><p>Chỉ một bài đăng nhỏ cũng có thể tiếp cận rất nhiều người.</p></div>
+ <div class="timeline">
+  <div class="timeline-item"><div class="num">1</div><div class="card"><h3>Khởi nguồn</h3><p>Một thông tin được đăng tải trên mạng xã hội, diễn đàn hoặc website. Thông tin có thể đúng, sai hoặc chưa được xác minh.</p></div></div>
+  <div class="timeline-item"><div class="num">2</div><div class="card"><h3>Lan truyền</h3><p>Người dùng đọc, bình luận, chia sẻ hoặc đăng lại. Nội dung có thể bị cắt ghép, thêm thắt hoặc mất bối cảnh.</p></div></div>
+  <div class="timeline-item"><div class="num">3</div><div class="card"><h3>Khuếch đại</h3><p>Lượt tương tác và hệ thống đề xuất có thể khiến nội dung xuất hiện với nhiều người hơn. Nội dung gây tò mò hoặc cảm xúc mạnh dễ được chú ý.</p></div></div>
+  <div class="timeline-item"><div class="num">4</div><div class="card"><h3>Tác động</h3><p>Thông tin ảnh hưởng đến nhận thức, cảm xúc và hành động của người tiếp nhận. Tin sai lệch có thể tạo hoang mang, hiểu lầm và tổn hại.</p></div></div>
+ </div>
+ <div class="note"><b>Hãy nhớ:</b> Nhiều lượt thích, bình luận hoặc chia sẻ không chứng minh một thông tin là đúng.</div>
+</section>
+
+<section class="page" id="check">
+ <div class="section-head"><span class="tag">02 • AI NEWS CHECK</span><h2>Trạm kiểm chứng thông tin</h2><p>Gửi một đường link công khai. Hệ thống sẽ đọc bài viết, tìm nguồn đối chiếu trên Internet và phân tích bằng AI.</p></div>
+ <div class="panel">
+  <label for="newsUrl">Đường link bài viết cần kiểm chứng</label>
+  <input id="newsUrl" type="url" placeholder="https://example.com/bai-viet-can-kiem-chung" autocomplete="url">
+  <p class="small">Hỗ trợ bài viết công khai có nội dung HTML. Một số trang yêu cầu đăng nhập, chặn bot hoặc chỉ hiển thị nội dung bằng ứng dụng có thể không đọc được.</p>
+  <div class="fact-actions"><button class="btn" id="factCheckBtn" onclick="startFactCheck()">🔎 Bắt đầu kiểm chứng</button><button class="btn secondary" onclick="document.getElementById('newsUrl').value='';document.getElementById('factResult').style.display='none'">Xóa đường link</button></div>
+  <div class="fact-status" id="factStatus" aria-live="polite">
+   <b id="statusTitle">Đang chuẩn bị kiểm chứng...</b><div class="fact-progress"><span id="progressBar"></span></div>
+   <div class="fact-stage" id="stage1">◉ Đọc và trích xuất nội dung bài viết</div>
+   <div class="fact-stage" id="stage2">◯ Tìm kiếm các nguồn độc lập để đối chiếu</div>
+   <div class="fact-stage" id="stage3">◯ Phân tích bằng chứng và đưa ra nhận định</div>
+   <p class="small" id="statusHint">Quá trình có thể mất từ vài chục giây đến hơn một phút tùy tốc độ phản hồi của các nguồn.</p>
+  </div>
+  <div class="result" id="factResult" aria-live="polite"></div>
+  <div class="note"><b>Lưu ý:</b> Đây là công cụ hỗ trợ nghiên cứu, không phải cơ quan xác minh chính thức. AI có thể sai; kết quả phụ thuộc vào khả năng truy cập bài viết và chất lượng nguồn tìm được. Hãy mở các nguồn tham khảo để tự kiểm tra trước khi chia sẻ.</div>
+ </div>
+ <div class="panel"><h3>Hệ thống đánh giá như thế nào?</h3><div class="timeline">
+  <div class="timeline-item"><div class="num">1</div><div class="card"><h3>Đọc bài viết gốc</h3><p>Máy chủ truy cập đường link công khai và trích xuất tiêu đề, nội dung, tác giả và nguồn đăng tải nếu có.</p></div></div>
+  <div class="timeline-item"><div class="num">2</div><div class="card"><h3>Tìm kiếm thông tin đối chiếu</h3><p>AI xác định các khẳng định có thể kiểm chứng, sau đó hệ thống tìm các nguồn khác liên quan trên Internet.</p></div></div>
+  <div class="timeline-item"><div class="num">3</div><div class="card"><h3>Đánh giá và khuyến nghị</h3><p>AI so sánh bằng chứng, chỉ ra điểm được ủng hộ, bị bác bỏ hoặc chưa rõ; cuối cùng đưa ra lời khuyên thận trọng.</p></div></div>
+ </div></div>
+</section>
+
+<section class="page" id="guide">
+ <div class="section-head"><span class="tag">03 • CẨM NANG</span><h2>5 bước kiểm chứng thông tin</h2><p>Lưu lại quy trình này và áp dụng mỗi khi bắt gặp một tin tức đáng chú ý.</p></div>
+ <div class="timeline">
+  <div class="timeline-item"><div class="num">1</div><div class="card"><h3>Khoan chia sẻ</h3><p>Dừng vài giây, không phản ứng vội trước tiêu đề gây sốc, kích động cảm xúc hoặc thúc giục chia sẻ.</p></div></div>
+  <div class="timeline-item"><div class="num">2</div><div class="card"><h3>Kiểm tra nguồn</h3><p>Ai đăng? Đơn vị nào chịu trách nhiệm? Có tác giả, thông tin liên hệ và lịch sử hoạt động rõ ràng không?</p></div></div>
+  <div class="timeline-item"><div class="num">3</div><div class="card"><h3>Đối chiếu nội dung</h3><p>Tìm thông tin tương tự từ các nguồn độc lập. Ưu tiên tài liệu gốc, thông báo chính thức và bằng chứng có thể kiểm tra.</p></div></div>
+  <div class="timeline-item"><div class="num">4</div><div class="card"><h3>Đánh giá bằng chứng</h3><p>Phân biệt sự kiện với ý kiến, suy đoán hoặc quảng cáo. Kiểm tra ngày tháng, số liệu, hình ảnh và bối cảnh.</p></div></div>
+  <div class="timeline-item"><div class="num">5</div><div class="card"><h3>Chia sẻ có trách nhiệm</h3><p>Chỉ chia sẻ khi đủ căn cứ. Nếu chưa chắc chắn, hãy nói rõ điều đó hoặc không lan truyền. Nếu đã chia sẻ sai, hãy đính chính.</p></div></div>
+ </div>
+ <div class="panel"><h3>Checklist trước khi nhấn nút chia sẻ</h3><div class="checklist">
+  <label class="check"><input type="checkbox"> Tôi biết thông tin đến từ đâu.</label>
+  <label class="check"><input type="checkbox"> Tôi đã kiểm tra thời gian và bối cảnh.</label>
+  <label class="check"><input type="checkbox"> Tôi đã đối chiếu bằng chứng.</label>
+  <label class="check"><input type="checkbox"> Tôi không chia sẻ chỉ vì cảm xúc.</label>
+ </div></div>
+</section>
+
+<section class="page" id="quiz">
+ <div class="section-head"><span class="tag">04 • FAKE NEWS DETECTOR</span><h2>Bạn có đủ tỉnh táo để nhận diện tin đáng nghi?</h2><p>Chọn phương án phù hợp nhất. Sau khi nộp bài, bạn sẽ xem được giải thích.</p></div>
+ <div class="panel" id="quizArea">
+  <div class="quiz-q" data-answer="b" data-explain="Lượt chia sẻ không phải bằng chứng. Hãy tìm nguồn gốc và đối chiếu thông tin với nguồn độc lập.">
+   <h3>1. Một bài đăng có hàng chục nghìn lượt chia sẻ. Điều đó chứng minh điều gì?</h3>
+   <label class="option"><input type="radio" name="q1" value="a"> Nội dung chắc chắn đúng.</label>
+   <label class="option"><input type="radio" name="q1" value="b"> Nội dung đang được lan truyền rộng, chưa chứng minh tính chính xác.</label>
+   <label class="option"><input type="radio" name="q1" value="c"> Có thể chia sẻ ngay.</label><div class="feedback"></div>
+  </div>
+  <div class="quiz-q" data-answer="c" data-explain="Cần kiểm tra nguồn gốc, ngày đăng và bối cảnh. Hình ảnh cũ có thể bị sử dụng để minh họa sai cho một sự kiện mới.">
+   <h3>2. Bạn thấy một bức ảnh kèm tin “vừa xảy ra hôm nay”. Bạn nên làm gì?</h3>
+   <label class="option"><input type="radio" name="q2" value="a"> Tin vì ảnh trông rất thật.</label>
+   <label class="option"><input type="radio" name="q2" value="b"> Chia sẻ để mọi người cảnh giác.</label>
+   <label class="option"><input type="radio" name="q2" value="c"> Tìm ảnh gốc, kiểm tra thời gian và đối chiếu nguồn tin.</label><div class="feedback"></div>
+  </div>
+  <div class="quiz-q" data-answer="a" data-explain="Nguồn chính thức và tài liệu gốc thường giúp xác minh tốt hơn. Tuy vậy, vẫn cần đọc đúng nội dung và bối cảnh.">
+   <h3>3. Nguồn nào nên được ưu tiên khi kiểm tra một thông báo của trường?</h3>
+   <label class="option"><input type="radio" name="q3" value="a"> Kênh thông báo chính thức của nhà trường.</label>
+   <label class="option"><input type="radio" name="q3" value="b"> Một bình luận không ghi nguồn.</label>
+   <label class="option"><input type="radio" name="q3" value="c"> Ảnh chụp màn hình không rõ xuất xứ.</label><div class="feedback"></div>
+  </div>
+  <div class="quiz-q" data-answer="b" data-explain="Khi chưa đủ căn cứ, không nên khẳng định hay tiếp tục lan truyền. Hãy tìm thêm nguồn đáng tin cậy.">
+   <h3>4. Bạn chưa thể xác minh một tin gây tranh cãi. Cách xử lý tốt nhất?</h3>
+   <label class="option"><input type="radio" name="q4" value="a"> Chia sẻ kèm câu “không biết có thật không”.</label>
+   <label class="option"><input type="radio" name="q4" value="b"> Tạm dừng chia sẻ và tiếp tục kiểm tra.</label>
+   <label class="option"><input type="radio" name="q4" value="c"> Tin theo số đông.</label><div class="feedback"></div>
+  </div>
+  <div class="quiz-q" data-answer="c" data-explain="Nếu đã chia sẻ thông tin sai, hãy gỡ hoặc đính chính rõ ràng để hạn chế việc tiếp tục lan truyền.">
+   <h3>5. Nếu phát hiện mình đã chia sẻ thông tin sai, bạn nên làm gì?</h3>
+   <label class="option"><input type="radio" name="q5" value="a"> Xóa bài nhưng không cần nói gì.</label>
+   <label class="option"><input type="radio" name="q5" value="b"> Giữ nguyên vì đã có nhiều người xem.</label>
+   <label class="option"><input type="radio" name="q5" value="c"> Gỡ hoặc đính chính công khai, nêu thông tin đã xác minh.</label><div class="feedback"></div>
+  </div>
+  <button class="btn" onclick="submitQuiz()">Nộp câu trả lời</button>
+  <button class="btn secondary" onclick="resetQuiz()">Làm lại</button>
+  <div class="result" id="quizResult" aria-live="polite"></div>
+ </div>
+</section>
+
+<section class="page" id="impact">
+ <div class="section-head"><span class="tag">05 • NHẬN THỨC VÀ TRÁCH NHIỆM</span><h2>Một cú nhấp chuột – Ngàn hệ lụy</h2><p>Chia sẻ thông tin sai sự thật có thể gây ảnh hưởng vượt xa màn hình điện thoại.</p></div>
+ <div class="grid">
+  <article class="card"><div class="icon">⚠️</div><h3>Gây hoang mang dư luận</h3><p>Tạo lo lắng, hiểu lầm và khiến cộng đồng phản ứng dựa trên thông tin chưa được xác minh.</p></article>
+  <article class="card"><div class="icon">👤</div><h3>Tổn hại danh dự cá nhân</h3><p>Tin đồn hoặc nội dung sai lệch có thể làm tổn thương danh dự, uy tín và đời sống của người khác.</p></article>
+  <article class="card"><div class="icon">🏫</div><h3>Ảnh hưởng tổ chức, cộng đồng</h3><p>Thông tin sai có thể làm giảm niềm tin, gây xáo trộn hoạt động và tạo mâu thuẫn.</p></article>
+  <article class="card"><div class="icon">🧠</div><h3>Làm sai lệch nhận thức</h3><p>Người đọc có thể hình thành quan điểm hoặc quyết định dựa trên dữ kiện không chính xác.</p></article>
+  <article class="card"><div class="icon">⚖️</div><h3>Nguy cơ vi phạm pháp luật</h3><p>Tùy nội dung, hành vi và mức độ, việc đăng tải hoặc chia sẻ thông tin sai sự thật có thể dẫn đến trách nhiệm pháp lý.</p></article>
+  <article class="card"><div class="icon">🔁</div><h3>Khó thu hồi thông tin</h3><p>Một nội dung đã được sao chép và chia sẻ nhiều lần rất khó gỡ bỏ hoàn toàn khỏi môi trường mạng.</p></article>
+ </div>
+ <div class="panel"><h3>Trước khi chia sẻ, hãy tự hỏi</h3><p style="font-size:20px;font-weight:800;color:#fff">“Thông tin này đến từ đâu? Có bằng chứng không? Việc chia sẻ có thể gây hại cho ai?”</p><p class="small">Trở thành công dân số có trách nhiệm bắt đầu từ những lựa chọn nhỏ mỗi ngày.</p></div>
+</section>
+
+<footer class="footer"><span><b>BEHIND THE NEWS</b> · Sự thật đằng sau mỗi tin tức</span><span>THINK • CHECK • SHARE RESPONSIBLY</span></footer>
+</main>
+<script>
+function showPage(id){
+ document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));
+ document.querySelectorAll('.navlinks button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.navlinks button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+const stageLabels = ['Đọc và trích xuất nội dung bài viết','Tìm kiếm các nguồn độc lập để đối chiếu','Phân tích bằng chứng và đưa ra nhận định'];
+function setFactStage(active){
+ const widths=[18,58,86];
+ document.getElementById('progressBar').style.width=widths[Math.max(0,active)]+'%';
+ stageLabels.forEach((label,i)=>{
+  const el=document.getElementById('stage'+(i+1));
+  el.className='fact-stage '+(i<active?'done':i===active?'active':'');
+  el.textContent=(i<active?'✓ ':i===active?'◉ ':'◯ ')+label;
+ });
+}
+async function startFactCheck(){
+ const url=document.getElementById('newsUrl').value.trim();
+ const btn=document.getElementById('factCheckBtn');
+ const status=document.getElementById('factStatus');
+ const result=document.getElementById('factResult');
+ if(!url){alert('Bạn hãy nhập đường link bài viết trước nhé.');return;}
+ try{const parsed=new URL(url);if(!['http:','https:'].includes(parsed.protocol))throw new Error();}
+ catch{alert('Đường link chưa hợp lệ. Hãy nhập link bắt đầu bằng https:// hoặc http://');return;}
+ btn.disabled=true;btn.textContent='⏳ Đang kiểm chứng...';status.style.display='block';result.style.display='none';
+ document.getElementById('statusTitle').textContent='Đang truy cập và phân tích bài viết...';
+ document.getElementById('statusHint').textContent='Vui lòng giữ trang này mở trong khi hệ thống làm việc.';
+ setFactStage(0);
+ const stageTimer=setTimeout(()=>{setFactStage(1);document.getElementById('statusTitle').textContent='Đang tìm kiếm và đối chiếu nguồn tin...';},4500);
+ const stageTimer2=setTimeout(()=>{setFactStage(2);document.getElementById('statusTitle').textContent='Đang tổng hợp bằng chứng và viết nhận định...';},16000);
+ try{
+  const response=await fetch('/api/fact-check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url})});
+  const data=await response.json();
+  if(!response.ok)throw new Error(data.error||'Không thể kiểm chứng đường link này.');
+  clearTimeout(stageTimer);clearTimeout(stageTimer2);setFactStage(3);
+  document.getElementById('progressBar').style.width='100%';
+  document.getElementById('statusTitle').textContent='Đã hoàn tất quá trình kiểm chứng';
+  document.getElementById('statusHint').textContent='Hãy đọc kỹ các bằng chứng và giới hạn của kết quả bên dưới.';
+  renderFactResult(data);
+ }catch(error){
+  clearTimeout(stageTimer);clearTimeout(stageTimer2);
+  result.style.display='block';result.innerHTML='<strong>Chưa thể hoàn thành kiểm chứng</strong><p>'+escapeHtml(error.message||'Đã xảy ra lỗi. Vui lòng thử lại sau.')+'</p><p class="small">Nếu lỗi tiếp tục xảy ra, trang có thể không cho phép truy cập tự động hoặc máy chủ chưa được cấu hình đầy đủ.</p>';
+ }finally{btn.disabled=false;btn.textContent='🔎 Kiểm chứng một đường link khác';}
+}
+function renderFactResult(data){
+ const result=document.getElementById('factResult');
+ const labels={co_co_so:'CÓ CƠ SỞ ỦNG HỘ',co_dau_hieu_sai:'CÓ DẤU HIỆU SAI LỆCH',hon_hop:'THÔNG TIN HỖN HỢP / THIẾU NGỮ CẢNH',chua_du_can_cu:'CHƯA ĐỦ CĂN CỨ KẾT LUẬN'};
+ const confidence={thap:'Thấp',trung_binh:'Trung bình',cao:'Cao'};
+ const verdict=data.verdict||'chua_du_can_cu';
+ let html='<div class="small">BÀI VIẾT ĐÃ PHÂN TÍCH</div><h3>'+escapeHtml(data.article?.title||'Bài viết được gửi')+'</h3><p class="small">Nguồn: '+escapeHtml(data.article?.publisher||'Không xác định')+'</p>';
+ html+='<div class="verdict '+verdict+'"><div class="small">KẾT QUẢ ĐÁNH GIÁ</div><h3>'+escapeHtml(data.verdictLabel||labels[verdict]||labels.chua_du_can_cu)+'</h3><p>'+escapeHtml(data.summary||'Chưa có phần tóm tắt.')+'</p><p><b>Mức độ chắc chắn:</b> '+escapeHtml(confidence[data.confidence]||'Chưa xác định')+'</p></div>';
+ if(data.reasoning)html+='<h3>Vì sao hệ thống đưa ra nhận định này?</h3><p>'+escapeHtml(data.reasoning)+'</p>';
+ if(Array.isArray(data.claims)&&data.claims.length){html+='<h3>Đối chiếu các khẳng định chính</h3>';data.claims.forEach(c=>{const a={duoc_ho_tro:'Được hỗ trợ',bi_bac_bo:'Bị bằng chứng bác bỏ',mot_phan:'Đúng một phần',chua_ro:'Chưa đủ thông tin'};html+='<div class="claim-item"><b>'+escapeHtml(c.claim||'')+'</b><p><b>'+escapeHtml(a[c.assessment]||'Chưa rõ')+':</b> '+escapeHtml(c.explanation||'')+'</p></div>';});}
+ if(Array.isArray(data.evidence)&&data.evidence.length){html+='<h3>Nguồn thông tin được tìm thấy</h3><div class="evidence-list">';data.evidence.forEach((e,i)=>{let stance={ung_ho:'Ủng hộ',phan_bac:'Phản bác',bo_sung:'Bổ sung ngữ cảnh',khong_ro:'Chưa rõ'};html+='<div class="evidence-item"><b>'+(i+1)+'. '+escapeHtml(e.title||'Nguồn tham khảo')+'</b><p>'+escapeHtml(e.publisher||'')+' · '+escapeHtml(stance[e.stance]||'Tham khảo')+'</p><p>'+escapeHtml(e.relevance||'')+'</p><a href="'+escapeHtml(e.url||'#')+'" target="_blank" rel="noopener noreferrer">Mở nguồn đối chiếu ↗</a></div>';});html+='</div>';}else{html+='<p>Không tìm được nguồn đối chiếu đủ phù hợp.</p>';}
+ if(data.advice)html+='<h3>Lời khuyên cho người đọc</h3><div class="note">'+escapeHtml(data.advice)+'</div>';
+ if(Array.isArray(data.limitations)&&data.limitations.length){html+='<h3>Những điều cần lưu ý</h3><ul>'+data.limitations.map(x=>'<li>'+escapeHtml(x)+'</li>').join('')+'</ul>';}
+ html+='<p class="small">Thời điểm kiểm chứng: '+(data.checkedAt?new Date(data.checkedAt).toLocaleString('vi-VN'):'Không rõ')+'. Kết quả do AI tổng hợp từ nội dung trích xuất và kết quả tìm kiếm; không thay thế việc kiểm tra nguồn gốc.</p>';
+ html+='<p><a href="'+escapeHtml(data.article?.url||'#')+'" target="_blank" rel="noopener noreferrer">Mở bài viết gốc ↗</a></p>';
+ result.innerHTML=html;result.style.display='block';
+}
+
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function submitQuiz(){
+ let score=0,answered=0;
+ document.querySelectorAll('.quiz-q').forEach((q,i)=>{
+  const chosen=q.querySelector('input:checked');
+  const fb=q.querySelector('.feedback');fb.style.display='block';
+  if(chosen){answered++;if(chosen.value===q.dataset.answer){score++;fb.innerHTML='✓ Chính xác. '+q.dataset.explain;fb.style.color='#65e6a7'}else{fb.innerHTML='✕ Chưa chính xác. '+q.dataset.explain;fb.style.color='#ff9aaa'}}
+  else{fb.innerHTML='Bạn chưa chọn đáp án. '+q.dataset.explain;fb.style.color='#ffd166'}
+ });
+ const r=document.getElementById('quizResult');r.style.display='block';
+ r.innerHTML='<div class="score">Kết quả: '+score+'/5 điểm</div><p>Bạn đã trả lời '+answered+'/5 câu. Hãy đọc phần giải thích để rút ra cách kiểm chứng phù hợp.</p>';
+}
+function resetQuiz(){
+ document.querySelectorAll('.quiz-q input').forEach(i=>i.checked=false);
+ document.querySelectorAll('.feedback').forEach(f=>{f.style.display='none';f.textContent=''});
+ document.getElementById('quizResult').style.display='none';
+}
+</script>
+</body>
+</html>
